@@ -6721,7 +6721,7 @@ function asstExecuteTool(name) {
 //    do Gemini tem limite de requisições por minuto/dia — consulte
 //    https://ai.google.dev/gemini-api/docs/rate-limits para os valores atuais.
 //    Não hospede este arquivo publicamente na internet.
-const ASST_API_KEY = "AIzaSyCvThssJV2ZzoqvN53knVPdFqbKtWnnk9g"; // ex: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+const ASST_API_KEY = "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"; // ex: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 const ASST_MODEL = "gemini-3.5-flash";
 // ════════════════════════════════════════════════════════════════
 
@@ -6742,7 +6742,7 @@ async function asstAskAI(userText) {
 
   ASST_HISTORY.push({ role: 'user', parts: [{ text: userText }] });
 
-  if (!ASST_API_KEY || ASST_API_KEY === "AIzaSyCvThssJV2ZzoqvN53knVPdFqbKtWnnk9g") {
+  if (!ASST_API_KEY || ASST_API_KEY === "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") {
     return 'A chave de API do Pachequinho ainda não foi configurada. Peça ao administrador do sistema para configurar a chave do Gemini no código (constante ASST_API_KEY). ';
   }
 
