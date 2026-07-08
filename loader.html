@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+  loader.html — "carregador" fixo do ComexPro (Barbieri do Brasil)
+  ═══════════════════════════════════════════════════════════════
+  ESTE ARQUIVO NÃO PRECISA SER ATUALIZADO NUNCA MAIS.
+
+  O QUE ELE FAZ:
+  No Google Sites, em vez de apontar o iframe direto para "index.html"
+  (que fica em cache no GitHub Pages / navegador por até ~10 minutos),
+  você aponta o iframe para ESTE arquivo. Toda vez que alguém abre a
+  página, este carregador adiciona um parâmetro único (baseado no
+  horário exato) na URL do index.html antes de carregá-lo — isso força
+  o navegador e a CDN do GitHub Pages a sempre buscar a versão mais
+  recente, sem nunca servir uma cópia antiga em cache.
+
+  COMO USAR:
+  1) Suba este arquivo para o MESMO repositório do GitHub, na MESMA
+     pasta que o index.html (raiz do repo ou dentro de /docs, o que
+     você já estiver usando para o GitHub Pages).
+  2) No Google Sites, troque o link do iframe UMA ÚNICA VEZ para
+     apontar para este loader.html em vez do index.html:
+       Antes:  https://SEUUSUARIO.github.io/SEUREPO/index.html
+       Depois: https://SEUUSUARIO.github.io/SEUREPO/loader.html
+  3) Publique o Google Sites de novo (essa parte só precisa ser feita
+     agora, uma vez).
+  4) Pronto. Daqui pra frente, é só subir o index.html atualizado pro
+     GitHub normalmente (upload direto pelo site, como você já faz) —
+     na próxima vez que alguém abrir a página, ele já vai ver a versão
+     nova automaticamente, sem precisar mexer em mais nada.
+
+  Se quiser trocar o nome do arquivo real (hoje "index.html"), edite
+  a constante ARQUIVO_REAL logo abaixo.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>ComexPro — Barbieri do Brasil</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0f172a; }
+  #loading {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px;
+    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: #cbd5e1;
+  }
+  #loading .spinner {
+    width: 34px; height: 34px;
+    border: 3px solid rgba(255,255,255,.15);
+    border-top-color: #c0392b;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #app-frame { border: 0; width: 100%; height: 100%; display: none; }
+</style>
+</head>
+<body>
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <div>Carregando ComexPro…</div>
+  </div>
+
+  <iframe id="app-frame" title="ComexPro"></iframe>
+
+  <script>
+    // ── Nome do arquivo real do sistema, na mesma pasta deste loader ──
+    const ARQUIVO_REAL = 'index.html';
+
+    // Parâmetro único a cada carregamento — garante que o navegador e a
+    // CDN do GitHub Pages sempre busquem a versão mais recente do arquivo,
+    // nunca uma cópia antiga guardada em cache.
+    const cacheBuster = Date.now();
+    const urlComCacheBuster = `${ARQUIVO_REAL}?v=${cacheBuster}`;
+
+    const frame = document.getElementById('app-frame');
+    const loading = document.getElementById('loading');
+
+    frame.addEventListener('load', () => {
+      loading.style.display = 'none';
+      frame.style.display = 'block';
+    });
+
+    frame.src = urlComCacheBuster;
+  </script>
+
+</body>
+</html>
